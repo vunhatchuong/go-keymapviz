@@ -19,27 +19,27 @@ var Layouts = map[string]string{
 }
 
 func LoadArtTemplate(kb string, layout string) ([]byte, error) {
-	CheckLayoutForKeyboardExist(kb, layout)
-    layout = Layouts[layout]
-
-	template, err := os.ReadFile(Keyboards[kb][layout])
+	layoutValue, err := CheckLayoutForKeyboardExist(kb, layout)
+	if err != nil {
+		return nil, err
+	}
+	template, err := os.ReadFile(Keyboards[kb][layoutValue])
 	if err != nil {
 		return nil, fmt.Errorf("Can't load template: %v", err)
 	}
 	return template, nil
 }
 
-func CheckLayoutForKeyboardExist(kb string, layout string) bool {
+// Return the value of the given layout, layout = Layouts[layout]
+func CheckLayoutForKeyboardExist(kb string, layout string) (string, error) {
 	if _, ok := Layouts[layout]; ok == true {
 		layout = Layouts[layout]
 	}
 
 	if kbLayout, ok := Keyboards[kb]; ok == false {
-		fmt.Printf("Keyboard: %v doesn't exist\n-h for available keyboards", kb)
-		os.Exit(0)
+		return "", fmt.Errorf("Keyboard: %v doesn't exist\n-h for available keyboards", kb)
 	} else if _, ok := kbLayout[layout]; ok == false {
-		fmt.Printf("Keyboard: %v doesn't have layout: %v\nAvailable layout: %v", kb, layout, kbLayout)
-		os.Exit(0)
+		return "", fmt.Errorf("Keyboard: %v doesn't exist\n-h for available keyboards", kb)
 	}
-	return true
+	return layout, nil
 }

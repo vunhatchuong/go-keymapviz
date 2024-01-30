@@ -46,8 +46,9 @@ func NewKeymapviz(
 		}
 	}
 
-	if keyboards.CheckLayoutForKeyboardExist(kb, layout) == false {
-		fmt.Printf("Keyboard: :%v doesn't have layout: %v", kb, layout)
+	_, err = keyboards.CheckLayoutForKeyboardExist(kb, layout)
+	if err != nil {
+		fmt.Println(err)
 		os.Exit(0)
 	}
 

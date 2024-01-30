@@ -131,28 +131,24 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 	}
 	templateStr := string(template)
 
-	getPlaceHolder := regexp.MustCompile(`\{.*?\}`)
-	fmt.Println(getPlaceHolder)
-
 	for i, layer := range keymaps {
 		currentLayer := templateStr
 		for j := range layer {
+			getPlaceHolder := regexp.MustCompile(fmt.Sprintf(`\{\s*(%d)\s*\}`, j))
 			placeholder := getPlaceHolder.FindString(currentLayer)
 			placeholderLen := len(placeholder)
-			fmt.Printf("PlaceholderLen:%v\n", placeholderLen)
 			key := keymaps[i][j]
 			if len(key) > placeholderLen {
 				key = key[:placeholderLen]
-				fmt.Printf("Edited key %v", key)
-
 			}
 
-			subStr := fmt.Sprintf(
-				fmt.Sprintf("%%-%ds", placeholderLen), // %-5s
-				fmt.Sprintf(
-					fmt.Sprintf("%%%ds", placeholderLen/2), // %5s
-					key),
-			)
+            // Needs better way to center
+            subStr := fmt.Sprintf(
+                fmt.Sprintf("%%-%ds", placeholderLen),
+                fmt.Sprintf(
+                    fmt.Sprintf("%%%ds", placeholderLen/2),
+                    key),
+            )
 
 			currentLayer = strings.Replace(
 				currentLayer,
@@ -161,6 +157,6 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 				1,
 			)
 		}
-		fmt.Println(currentLayer)
+		fmt.Printf("%s\n\n", currentLayer)
 	}
 }

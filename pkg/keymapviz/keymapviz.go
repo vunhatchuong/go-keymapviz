@@ -142,13 +142,13 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 				key = key[:placeholderLen]
 			}
 
-            // Needs better way to center
-            subStr := fmt.Sprintf(
-                fmt.Sprintf("%%-%ds", placeholderLen),
-                fmt.Sprintf(
-                    fmt.Sprintf("%%%ds", placeholderLen/2),
-                    key),
-            )
+			// Needs better way to center
+			subStr := fmt.Sprintf(
+				fmt.Sprintf("%%-%ds", placeholderLen),
+				fmt.Sprintf(
+					fmt.Sprintf("%%%ds", placeholderLen/2),
+					key),
+			)
 
 			currentLayer = strings.Replace(
 				currentLayer,

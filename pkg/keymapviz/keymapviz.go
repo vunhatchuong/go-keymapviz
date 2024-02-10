@@ -25,12 +25,6 @@ func NewKeymapviz(
 	legendPath string,
 	wrapperPath string,
 ) (*Keymapviz, error) {
-	fmt.Println(keymapPath)
-	fmt.Println(kb)
-	fmt.Println(layout)
-	fmt.Println(legendPath)
-	fmt.Println(wrapperPath)
-
 	keymap, err := os.ReadFile(keymapPath)
 	if err != nil {
 		fmt.Printf("Can't load keymap file: %v", err)
@@ -157,6 +151,6 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 				1,
 			)
 		}
-		fmt.Printf("%s\n\n", currentLayer)
+		fmt.Println(currentLayer)
 	}
 }

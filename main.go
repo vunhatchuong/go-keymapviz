@@ -1,50 +1,55 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"log"
+	"os"
 
+	tea "github.com/charmbracelet/bubbletea"
+
+	"github.com/vunhatchuong/go-keymapviz/internal/cmd"
+	"github.com/vunhatchuong/go-keymapviz/internal/tui"
 	"github.com/vunhatchuong/go-keymapviz/pkg/keymapviz"
 )
 
 func main() {
-	keyboard := flag.String("kb", "", "Keyboard name")
-	layout := flag.String("t", "ascii", "ASCII layout output")
-	legendsPath := flag.String("l", "", "Custom legends for layout")
-	wrapperPath := flag.String("w", "", "Wrapper path")
-
-	flag.Usage = func() {
-		fmt.Println("Usage: keymapviz [-h] [-l LEGENDS] [-t {ascii,fancy}] [-w WRAPPERS] keymap_c")
-		fmt.Println("\nExample: keymapviz -kb sofle -t fancy ./sofle.c")
-		fmt.Println("\noptions:")
-		flag.PrintDefaults()
-	}
-	flag.Parse()
-	keymapPath := flag.Arg(0)
-
-	if *keyboard == "" {
-		log.Fatal("Missing keyboard argument -kb")
+	cmdFlags := cmd.NewCmdFlags()
+	if cmdFlags.Keyboard == "" && cmdFlags.KeymapPath == "" {
+		model := tui.NewModel()
+		model.InitList()
+		p := tea.NewProgram(model, tea.WithAltScreen(), tea.WithMouseCellMotion())
+		if _, err := p.Run(); err != nil {
+			fmt.Println("Error running program:", err)
+			os.Exit(0)
+		}
+		os.Exit(0)
 	}
 
-	if keymapPath == "" {
-		log.Fatal("Missing keymap path, example: keymapviz -kb sofle ./sofle.c")
+	if cmdFlags.Keyboard == "" {
+		fmt.Println("Missing keyboard argument -kb")
+		os.Exit(0)
+	}
+
+	if cmdFlags.KeymapPath == "" {
+		fmt.Println("Missing keymap path, example: keymapviz -kb sofle ./sofle.c")
+		os.Exit(0)
 	}
 
 	keymapviz, err := keymapviz.NewKeymapviz(
-		keymapPath,
-		*keyboard,
-		*layout,
-		*legendsPath,
-		*wrapperPath,
+		cmdFlags.KeymapPath,
+		cmdFlags.Keyboard,
+		cmdFlags.Layout,
+		cmdFlags.LegendsPath,
+		cmdFlags.WrapperPath,
 	)
 	if err != nil {
 		fmt.Printf("Error: %v", err)
+		os.Exit(0)
 	}
 
 	keymaps, err := keymapviz.ExtractKeymaps()
 	if err != nil {
-		log.Fatalf("Can't load keymaps: %v", err)
+		fmt.Printf("Can't load keymaps: %v", err)
+		os.Exit(0)
 	}
 	keymapviz.OutputStdout(keymaps)
 }

@@ -3,15 +3,7 @@ package keyboards
 import (
 	"fmt"
 	"os"
-
-	letsSplit "github.com/vunhatchuong/go-keymapviz/keyboards/lets_split"
-	"github.com/vunhatchuong/go-keymapviz/keyboards/sofle"
 )
-
-var Keyboards = map[string]map[string]string{
-	"sofle":      sofle.Layout,
-	"lets_split": letsSplit.Layout,
-}
 
 func LoadArtTemplate(kb string, layout string) ([]byte, error) {
 	layoutValue, err := CheckLayoutForKeyboardExist(kb, layout)

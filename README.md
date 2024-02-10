@@ -29,6 +29,7 @@ You can checkout available keyboards and their ascii templates when run the prog
 ```bash
 go-keymapviz
 ```
+![image](https://github.com/vunhatchuong/go-keymapviz/assets/20581504/943144d8-30a6-4337-aeb4-af4134b5c066)
 
 ## Convention
 

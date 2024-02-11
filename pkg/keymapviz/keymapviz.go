@@ -132,7 +132,10 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 			placeholderLen := len(placeholder)
 			key := keymaps[i][j]
 			if len(key) > placeholderLen {
-				key = key[:placeholderLen]
+				// Do this to retain symbols
+				keyRunes := []rune(key)
+				keyRunes = keyRunes[:placeholderLen]
+				key = string(keyRunes)
 			}
 
 			// Needs better way to center

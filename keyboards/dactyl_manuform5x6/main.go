@@ -1,6 +1,15 @@
 package dactyl_manuform5x6
 
-var Layout = map[string]string{
-	"ascii": "keyboards/dactyl_manuform5x6/ascii.tmpl",
-	"fancy": "keyboards/dactyl_manuform5x6/fancy.tmpl",
-}
+import _ "embed"
+
+var (
+	//go:embed ascii.tmpl
+	ascii string
+	//go:embed fancy.tmpl
+	fancy string
+
+	Layout = map[string]string{
+		"ascii": ascii,
+		"fancy": fancy,
+	}
+)

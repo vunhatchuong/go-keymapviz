@@ -1,5 +1,12 @@
 package crkbd
 
-var Layout = map[string]string{
-	"ascii": "keyboards/crkbd/ascii.tmpl",
-}
+import _ "embed"
+
+var (
+	//go:embed ascii.tmpl
+	ascii  string
+
+	Layout = map[string]string{
+		"ascii": ascii,
+	}
+)

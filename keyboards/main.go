@@ -2,18 +2,14 @@ package keyboards
 
 import (
 	"fmt"
-	"os"
 )
 
-func LoadArtTemplate(kb string, layout string) ([]byte, error) {
+func LoadArtTemplate(kb string, layout string) (string, error) {
 	layoutValue, err := CheckLayoutForKeyboardExist(kb, layout)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	template, err := os.ReadFile(Keyboards[kb][layoutValue])
-	if err != nil {
-		return nil, fmt.Errorf("Can't load template: %v", err)
-	}
+	template := Keyboards[kb][layoutValue]
 	return template, nil
 }
 

@@ -123,10 +123,9 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 		fmt.Printf("Can't load template: :%v", err)
 		os.Exit(0)
 	}
-	templateStr := string(template)
 
 	for i, layer := range keymaps {
-		currentLayer := templateStr
+		currentLayer := template
 		for j := range layer {
 			getPlaceHolder := regexp.MustCompile(fmt.Sprintf(`\{\s*(%d)\s*\}`, j))
 			placeholder := getPlaceHolder.FindString(currentLayer)

@@ -1,6 +1,16 @@
 package sofle
 
-var Layout = map[string]string{
-	"ascii": "keyboards/sofle/ascii.tmpl",
-	"fancy": "keyboards/sofle/fancy.tmpl",
-}
+import _ "embed"
+
+var (
+	//go:embed ascii.tmpl
+	ascii string
+
+	//go:embed fancy.tmpl
+	fancy string
+
+	Layout = map[string]string{
+		"ascii": ascii,
+		"fancy": fancy,
+	}
+)

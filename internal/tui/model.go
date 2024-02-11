@@ -2,7 +2,6 @@ package tui
 
 import (
 	"log"
-	"os"
 
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
@@ -70,8 +69,7 @@ func (m *Model) InitList() {
 	kb := m.SelectedItemName(KEYBOARD)
 	layout := m.SelectedItemName(LAYOUT)
 	layouts := keyboards.Keyboards[kb]
-	art, _ := os.ReadFile(layouts[layout])
-	m.viewport = newViewPort(string(art))
+	m.viewport = newViewPort(layouts[layout])
 }
 
 func (m *Model) changeFocusedNext(next bool) {
@@ -116,8 +114,7 @@ func (m *Model) populateAscii() {
 	kb := m.SelectedItemName(KEYBOARD)
 	layout := m.SelectedItemName(LAYOUT)
 	layouts := keyboards.Keyboards[kb]
-	art, _ := os.ReadFile(layouts[layout])
-	m.viewport.viewport.SetContent(string(art))
+	m.viewport.viewport.SetContent(layouts[layout])
 }
 
 func (m Model) Init() tea.Cmd {

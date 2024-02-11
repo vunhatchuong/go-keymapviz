@@ -1,6 +1,15 @@
 package sweet16
 
-var Layout = map[string]string{
-	"ascii": "keyboards/sweet16/ascii.tmpl",
-	"fancy": "keyboards/sweet16/fancy.tmpl",
-}
+import _ "embed"
+
+var (
+    //go:embed ascii.tmpl
+    ascii string
+
+    //go:embed fancy.tmpl
+    fancy string
+
+    Layout = map[string]string{
+	"ascii": ascii,
+	"fancy": fancy,
+})

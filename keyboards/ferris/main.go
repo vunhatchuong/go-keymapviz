@@ -1,6 +1,15 @@
 package ferris
 
-var Layout = map[string]string{
-	"ascii": "keyboards/ferris/ascii.tmpl",
-	"fancy": "keyboards/ferris/fancy.tmpl",
-}
+import _ "embed"
+
+var (
+	//go:embed ascii.tmpl
+	ascii string
+	//go:embed fancy.tmpl
+	fancy string
+
+	Layout = map[string]string{
+		"ascii": ascii,
+		"fancy": fancy,
+	}
+)

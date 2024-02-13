@@ -12,7 +12,9 @@ func LoadLegends(legendPath string) (map[string]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Can't load legends file: %v", err)
 	}
+
 	legends := ini.StringMap("legends")
+
 	return legends, nil
 }
 
@@ -21,5 +23,6 @@ func LoadWrapper(wrapperPath string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("Can't load wrapper: %v", err)
 	}
+
 	return string(wrapper), nil
 }

@@ -27,6 +27,7 @@ func NewCmdFlags() *cmdFlags {
 	}
 	flag.Parse()
 	keymapPath := flag.Arg(0)
+
 	return &cmdFlags{
 		Keyboard:    *keyboard,
 		Layout:      *layout,

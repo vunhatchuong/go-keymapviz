@@ -69,11 +69,13 @@ func (kmz *Keymapviz) ExtractWrapper() (map[string]string, error) {
 
 	wrapperDefinition := wrapperExtractor.FindAllStringSubmatch(kmz.Wrapper, -1)
 	wrapperMap := make(map[string]string, len(wrapperDefinition))
+
 	for i := range wrapperDefinition {
 		k := wrapperDefinition[i][1]
 		v := wrapperDefinition[i][2]
 		wrapperMap[k] = v
 	}
+
 	return wrapperMap, nil
 }
 
@@ -93,6 +95,7 @@ func (kmz *Keymapviz) ExtractKeymaps() ([][]string, error) {
 		if err != nil {
 			log.Fatalf("Can't extract wrapper: %v", err)
 		}
+
 		for k, v := range wrapper {
 			found = strings.ReplaceAll(found, k, v)
 		}
@@ -107,13 +110,14 @@ func (kmz *Keymapviz) ExtractKeymaps() ([][]string, error) {
 		keymap[i] = make([]string, len(keys))
 
 		for j := range keys {
-			if elem, ok := kmz.Legends[keys[j][1]]; ok == true {
+			if elem, ok := kmz.Legends[keys[j][1]]; ok {
 				keymap[i][j] = elem
 			} else {
 				keymap[i][j] = keys[j][1]
 			}
 		}
 	}
+
 	return keymap, nil
 }
 
@@ -126,11 +130,13 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 
 	for i, layer := range keymaps {
 		currentLayer := template
+
 		for j := range layer {
 			getPlaceHolder := regexp.MustCompile(fmt.Sprintf(`\{\s*(%d)\s*\}`, j))
 			placeholder := getPlaceHolder.FindString(currentLayer)
 			placeholderLen := len(placeholder)
 			key := keymaps[i][j]
+
 			if len(key) > placeholderLen {
 				// Do this to retain symbols
 				keyRunes := []rune(key)
@@ -153,6 +159,7 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 				1,
 			)
 		}
+
 		fmt.Println(currentLayer)
 	}
 }

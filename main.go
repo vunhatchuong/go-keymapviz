@@ -17,10 +17,12 @@ func main() {
 		model := tui.NewModel()
 		model.InitList()
 		p := tea.NewProgram(model, tea.WithAltScreen(), tea.WithMouseCellMotion())
+
 		if _, err := p.Run(); err != nil {
 			fmt.Println("Error running program:", err)
 			os.Exit(0)
 		}
+
 		os.Exit(0)
 	}
 
@@ -51,5 +53,6 @@ func main() {
 		fmt.Printf("Can't load keymaps: %v", err)
 		os.Exit(0)
 	}
+
 	keymapviz.OutputStdout(keymaps)
 }

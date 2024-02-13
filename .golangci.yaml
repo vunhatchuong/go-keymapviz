@@ -1,0 +1,18 @@
+linters:
+    # Enable specific linter
+    # https://golangci-lint.run/usage/linters/#enabled-by-default
+    enable:
+        - gofumpt
+        - goprintffuncname
+        - gosec
+        - misspell
+        - nakedret
+        - exhaustive
+        - exhaustruct
+        - prealloc
+        - gocritic
+        - bodyclose
+        - testifylint
+        - unconvert
+        - wsl
+        - gocheckcompilerdirectives

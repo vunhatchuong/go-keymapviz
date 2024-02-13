@@ -63,6 +63,7 @@ func (m columnViewPort) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.help.Width = msg.Width
 		footerHeight := lipgloss.Height(m.helpView())
 		m.setSize(msg.Width-2, msg.Height/2)
+
 		if !m.ready {
 			m.viewport = viewport.New(msg.Width-2, (msg.Height/2)-footerHeight)
 			m.viewport.SetContent(m.content)
@@ -83,6 +84,7 @@ func (m columnViewPort) View() string {
 	if !m.ready {
 		return "\n  Initializing..."
 	}
+
 	return m.getStyle().Render(m.viewport.View())
 }
 
@@ -100,6 +102,7 @@ func (c *columnViewPort) getStyle() lipgloss.Style {
 			Height(c.height).
 			Align(lipgloss.Center, lipgloss.Center)
 	}
+
 	return lipgloss.NewStyle().
 		Padding(1, 2).
 		Border(lipgloss.HiddenBorder()).

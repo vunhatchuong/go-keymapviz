@@ -20,8 +20,10 @@ func newColumn(title string) column {
 	if title == "keyboards" {
 		focus = true
 	}
+
 	defaultList := list.New([]list.Item{}, list.NewDefaultDelegate(), 0, 0)
 	defaultList.SetShowHelp(false)
+
 	return column{focus: focus, title: title, list: defaultList}
 }
 
@@ -40,10 +42,13 @@ func (c *column) Focused() bool {
 func (c *column) getNext() int {
 	items := c.list.Items()
 	numberOfItems := len(items)
+
 	if c.list.Index()+2 > numberOfItems {
 		return c.selectedItem
 	}
+
 	c.selectedItem = c.list.Index() + 1
+
 	return c.selectedItem
 }
 
@@ -51,7 +56,9 @@ func (c *column) getPrev() int {
 	if c.list.Index()-1 < 0 {
 		return c.selectedItem
 	}
+
 	c.selectedItem = c.list.Index() - 1
+
 	return c.selectedItem
 }
 
@@ -65,6 +72,7 @@ func (c column) View() string {
 
 func (c column) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
+
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		c.setSize(msg.Width/2-2, msg.Height/3)
@@ -72,7 +80,9 @@ func (c column) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 	}
+
 	c.list, cmd = c.list.Update(msg)
+
 	return c, cmd
 }
 
@@ -90,6 +100,7 @@ func (c *column) getStyle() lipgloss.Style {
 			Width(c.width).
 			Height(c.height)
 	}
+
 	return lipgloss.NewStyle().
 		Padding(1, 2).
 		Border(lipgloss.HiddenBorder()).

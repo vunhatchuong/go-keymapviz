@@ -28,7 +28,7 @@ func NewKeymapviz(
 	keymap, err := os.ReadFile(keymapPath)
 	if err != nil {
 		fmt.Printf("Can't load keymap file: %v", err)
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	var wrapper string
@@ -36,14 +36,14 @@ func NewKeymapviz(
 		wrapper, err = LoadWrapper(wrapperPath)
 		if err != nil {
 			fmt.Printf("Can't load wrapper: %v", err)
-			os.Exit(0)
+			os.Exit(1)
 		}
 	}
 
 	_, err = keyboards.CheckLayoutForKeyboardExist(kb, layout)
 	if err != nil {
 		fmt.Println(err)
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	var legend map[string]string
@@ -51,7 +51,7 @@ func NewKeymapviz(
 		legend, err = LoadLegends(legendPath)
 		if err != nil {
 			fmt.Printf("Can't load legends file: %v", err)
-			os.Exit(0)
+			os.Exit(1)
 		}
 	}
 
@@ -125,7 +125,7 @@ func (kmz *Keymapviz) OutputStdout(keymaps [][]string) {
 	template, err := keyboards.LoadArtTemplate(kmz.Keyboard, kmz.Layout)
 	if err != nil {
 		fmt.Printf("Can't load template: :%v", err)
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	for i, layer := range keymaps {

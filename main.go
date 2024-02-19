@@ -20,7 +20,7 @@ func main() {
 
 		if _, err := p.Run(); err != nil {
 			fmt.Println("Error running program:", err)
-			os.Exit(0)
+			os.Exit(1)
 		}
 
 		os.Exit(0)
@@ -28,12 +28,12 @@ func main() {
 
 	if cmdFlags.Keyboard == "" {
 		fmt.Println("Missing keyboard argument -kb")
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	if cmdFlags.KeymapPath == "" {
 		fmt.Println("Missing keymap path, example: keymapviz -kb sofle ./sofle.c")
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	keymapviz, err := keymapviz.NewKeymapviz(
@@ -45,13 +45,13 @@ func main() {
 	)
 	if err != nil {
 		fmt.Printf("Error: %v", err)
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	keymaps, err := keymapviz.ExtractKeymaps()
 	if err != nil {
 		fmt.Printf("Can't load keymaps: %v", err)
-		os.Exit(0)
+		os.Exit(1)
 	}
 
 	keymapviz.OutputStdout(keymaps)
